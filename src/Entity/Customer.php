@@ -8,7 +8,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={"access_control"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+ *         "get"={"access_control"="is_granted('ROLE_ADMIN') and object.client == user"},
+ *         "post"={"access_control"="is_granted('ROLE_USER')"}
+ *     },
+ *     itemOperations={
+ *         "get"={"access_control"="is_granted('ROLE_ADMIN') and object.client == user"},
+ *         "put"={"access_control"="is_granted('ROLE_ADMIN') and object.client == user"},
+ *         "delete"={"access_control"="is_granted('ROLE_ADMIN') and object.client == user"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  * @UniqueEntity("email")
  */

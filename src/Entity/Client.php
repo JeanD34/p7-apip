@@ -9,7 +9,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={"access_control"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+ *         "get"={"access_control"="is_granted('ROLE_ADMIN')"},
+ *         "post"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get"={"access_control"="is_granted('ROLE_ADMIN') and object.client == user"},
+ *         "put"={"access_control"="is_granted('ROLE_ADMIN') and object.client == user"},
+ *         "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
 class Client implements UserInterface
