@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * @UniqueEntity("email")
  */
 class Customer
 {
@@ -20,11 +23,19 @@ class Customer
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min = 3,
+     *     max = 25
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
+     * @Assert\Length(
+     *     max = 255
+     * )
      */
     private $email;
 
